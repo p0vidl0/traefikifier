@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:13
+    restart: always
+    env_file:
+      - postgres.env
+    volumes:
+      - type: volume
+        source: postgres-data
+        target: /var/lib/postgresql/data
+    container_name: postgres
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+    networks:
+      internal-bridge:
+        aliases:
+          - postgres
+
+volumes:
+  postgres-data:
+
+networks:
+  internal-bridge:
+    name: internal-brige
